@@ -7,6 +7,8 @@ import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
 import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateDancingEventUseCaseShould {
@@ -36,5 +38,14 @@ public class CreateDancingEventUseCaseShould {
         new CreateDancingEventUseCase(eventOrganizer).invoke(EventOrganizerId.create("EO-1"));
 
         assertEquals(new DancingEventId("DE-1"), eventOrganizer.dancingEventId());
+    }
+
+    @Test
+    void add_multiple_dancing_events_to_an_event_organizer() throws Exception {
+        var eventOrganizer = new EventOrganizer();
+
+        new CreateDancingEventUseCase(eventOrganizer).invoke(EventOrganizerId.create("EO-1"));
+
+        assertEquals(List.of(new DancingEventId("DE-1")), eventOrganizer.unpublishedDancingEvents());
     }
 }
