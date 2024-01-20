@@ -7,16 +7,19 @@ import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
 import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateDancingEventUseCaseShould {
 
     @Test
     void fail_if_the_event_organizer_id_is_missing() {
+        var eventOrganizer = new EventOrganizer();
+
         assertThrows(MissingEventOrganizerId.class, () -> {
-            new CreateDancingEventUseCase(null).invoke(null);
+            new CreateDancingEventUseCase(eventOrganizer).invoke(null);
         });
+
+        assertNull(eventOrganizer.dancingEventId());
     }
 
     @Test
@@ -32,6 +35,6 @@ public class CreateDancingEventUseCaseShould {
 
         new CreateDancingEventUseCase(eventOrganizer).invoke(EventOrganizerId.create("EO-1"));
 
-        assertEquals(new DancingEventId("DE-1"), eventOrganizer.getDancingEventId());
+        assertEquals(new DancingEventId("DE-1"), eventOrganizer.dancingEventId());
     }
 }

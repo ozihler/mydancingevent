@@ -3,6 +3,7 @@ package com.example.mydancingevent.creating.core.application.usecase;
 import com.example.mydancingevent.creating.core.application.exception.MissingEventOrganizerId;
 import com.example.mydancingevent.creating.core.application.exception.NonExistentEventOrganizer;
 import com.example.mydancingevent.creating.core.domain.aggregate.EventOrganizer;
+import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
 import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
 
 public class CreateDancingEventUseCase {
@@ -25,6 +26,8 @@ public class CreateDancingEventUseCase {
         if (eventOrganizer == null) {
             throw new NonExistentEventOrganizer();
         }
+
+        eventOrganizer.addDancingEvent(new DancingEventId("DE-1"));
     }
 
 }
