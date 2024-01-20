@@ -5,6 +5,7 @@ import com.example.mydancingevent.creating.core.application.exception.NonExisten
 import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
 
 public class CreateDancingEventUseCase {
+
     public void invoke(EventOrganizerId eventOrganizerId)
             throws
             MissingEventOrganizerId,
