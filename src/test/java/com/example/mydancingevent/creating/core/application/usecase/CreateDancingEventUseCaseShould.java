@@ -3,6 +3,7 @@ package com.example.mydancingevent.creating.core.application.usecase;
 import com.example.mydancingevent.creating.core.application.exception.MissingEventOrganizerId;
 import com.example.mydancingevent.creating.core.application.exception.NonExistentEventOrganizer;
 import com.example.mydancingevent.creating.core.domain.aggregate.EventOrganizer;
+import com.example.mydancingevent.creating.core.domain.exception.FreeEventOrganizerHasReachedUnpublishedDancingEventLimit;
 import com.example.mydancingevent.creating.core.domain.exception.PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit;
 import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
 import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
@@ -81,6 +82,21 @@ public class CreateDancingEventUseCaseShould {
             useCase.invoke(EventOrganizerId.create("EO-1"));
             useCase.invoke(EventOrganizerId.create("EO-1"));
             useCase.invoke(EventOrganizerId.create("EO-1"));
+            useCase.invoke(EventOrganizerId.create("EO-1"));
+            useCase.invoke(EventOrganizerId.create("EO-1"));
+
+            // this will raise the exception
+            useCase.invoke(EventOrganizerId.create("EO-1"));
+        });
+    }
+
+    @Test
+    void fail_if_event_organizer_has_already_2_unpublished_dancing_events_and_is_free() throws Exception {
+
+        assertThrows(FreeEventOrganizerHasReachedUnpublishedDancingEventLimit.class, () -> {
+            var eventOrganizer = EventOrganizer.create();
+            var useCase = new CreateDancingEventUseCase(eventOrganizer);
+
             useCase.invoke(EventOrganizerId.create("EO-1"));
             useCase.invoke(EventOrganizerId.create("EO-1"));
 
