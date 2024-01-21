@@ -14,7 +14,6 @@ public class CreateDancingEventUseCase {
         this.eventOrganizer = eventOrganizer;
     }
 
-    int counter = 1;
     public void invoke(EventOrganizerId eventOrganizerId)
             throws
             MissingEventOrganizerId,
@@ -28,14 +27,12 @@ public class CreateDancingEventUseCase {
             throw new NonExistentEventOrganizer();
         }
 
-        if(counter == 1){
-            eventOrganizer.addDancingEvent(new DancingEventId("DE-1"));
-        } else if (counter == 2) {
-            eventOrganizer.addDancingEvent(new DancingEventId("DE-2"));
-        } else {
-            eventOrganizer.addDancingEvent(new DancingEventId("DE-3"));
-        }
-        counter++;
+        var dancingEventId = getDancingEventId();
+        eventOrganizer.addDancingEvent(dancingEventId);
     }
 
+    int counter = 1;
+    private DancingEventId getDancingEventId() {
+        return new DancingEventId("DE-" + counter++);
+    }
 }
