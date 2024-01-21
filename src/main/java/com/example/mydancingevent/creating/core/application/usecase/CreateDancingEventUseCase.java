@@ -2,7 +2,7 @@ package com.example.mydancingevent.creating.core.application.usecase;
 
 import com.example.mydancingevent.creating.core.application.exception.MissingEventOrganizerId;
 import com.example.mydancingevent.creating.core.application.exception.NonExistentEventOrganizer;
-import com.example.mydancingevent.creating.core.domain.aggregate.EventOrganizer;
+import com.example.mydancingevent.creating.core.application.port.EventOrganizerRepository;
 import com.example.mydancingevent.creating.core.domain.exception.FreeEventOrganizerHasReachedUnpublishedDancingEventLimit;
 import com.example.mydancingevent.creating.core.domain.exception.PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit;
 import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
@@ -10,17 +10,10 @@ import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
 
 public class CreateDancingEventUseCase {
 
-    private final EventOrganizer eventOrganizer;
-    private final EventOrganizer eventOrganizer2;
-    private final EventOrganizer eventOrganizer3;
+    private final EventOrganizerRepository eventOrganizers;
 
-    public CreateDancingEventUseCase(
-            EventOrganizer eventOrganizer,
-            EventOrganizer eventOrganizer2,
-            EventOrganizer eventOrganizer3) {
-        this.eventOrganizer = eventOrganizer;
-        this.eventOrganizer2 = eventOrganizer2;
-        this.eventOrganizer3 = eventOrganizer3;
+    public CreateDancingEventUseCase(EventOrganizerRepository eventOrganizers) {
+        this.eventOrganizers = eventOrganizers;
     }
 
     public void invoke(EventOrganizerId eventOrganizerId)
@@ -36,20 +29,11 @@ public class CreateDancingEventUseCase {
 
         var dancingEventId = getDancingEventId();
 
-        if (eventOrganizer == null
-                || eventOrganizer2 == null
-                || eventOrganizer3 == null
-        ) {
-            throw new NonExistentEventOrganizer();
-        }
+        var eventOrganizer = eventOrganizers.fetchById(eventOrganizerId);
 
-        if (eventOrganizer.id().equals(eventOrganizerId)) {
-            eventOrganizer.addDancingEvent(dancingEventId);
-        } else if (eventOrganizer2.id().equals(eventOrganizerId)) {
-            eventOrganizer2.addDancingEvent(dancingEventId);
-        } else {
-            eventOrganizer3.addDancingEvent(dancingEventId);
-        }
+        eventOrganizer.addDancingEvent(dancingEventId);
+
+        eventOrganizers.store(eventOrganizer);
     }
 
     int counter = 1;
