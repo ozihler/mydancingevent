@@ -122,4 +122,24 @@ public class CreateDancingEventUseCaseShould {
             useCase.invoke(EventOrganizerId.create("EO-1"));
         });
     }
+
+
+    @Test
+    void support_multiple_event_organizers() throws Exception {
+        var premiumEventOrganizer = EventOrganizer.create(EventOrganizerType.PREMIUM);
+        var freeEventOrganizer = EventOrganizer.create(EventOrganizerType.FREE);
+
+        var useCase = new CreateDancingEventUseCase(premiumEventOrganizer);
+
+        useCase.invoke(EventOrganizerId.create("EO-1"));
+        useCase.invoke(EventOrganizerId.create("EO-2"));
+
+        assertEquals(
+                List.of(new DancingEventId("DE-1")),
+                premiumEventOrganizer.unpublishedDancingEvents());
+
+        assertEquals(
+                List.of(new DancingEventId("DE-2")),
+                freeEventOrganizer.unpublishedDancingEvents());
+    }
 }
