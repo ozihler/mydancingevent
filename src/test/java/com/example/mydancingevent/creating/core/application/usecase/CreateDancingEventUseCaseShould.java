@@ -23,7 +23,7 @@ public class CreateDancingEventUseCaseShould {
         var eventOrganizer = EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-1"));
 
         assertThrows(MissingEventOrganizerId.class, () -> {
-            new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-1")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-1"))).invoke(null);
+            new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-2")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-3"))).invoke(null);
         });
 
         assertTrue(eventOrganizer.unpublishedDancingEvents().isEmpty());
@@ -40,7 +40,7 @@ public class CreateDancingEventUseCaseShould {
     void allow_up_to_10_unpublished_dancing_events_for_premium_event_organizers() throws Exception {
         var eventOrganizer = EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-1"));
 
-        var useCase = new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-1")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-1")));
+        var useCase = new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-2")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-3")));
         useCase.invoke(EventOrganizerId.create("EO-1"));
         useCase.invoke(EventOrganizerId.create("EO-1"));
         useCase.invoke(EventOrganizerId.create("EO-1"));
@@ -73,7 +73,7 @@ public class CreateDancingEventUseCaseShould {
     void allow_up_to_2_unpublished_dancing_events_for_free_event_organizers() throws Exception {
         var eventOrganizer = EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-1"));
 
-        var useCase = new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-1")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-1")));
+        var useCase = new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-2")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-3")));
         useCase.invoke(EventOrganizerId.create("EO-1"));
         useCase.invoke(EventOrganizerId.create("EO-1"));
 
@@ -90,7 +90,7 @@ public class CreateDancingEventUseCaseShould {
 
         assertThrows(PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit.class, () -> {
             var eventOrganizer = EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-1"));
-            var useCase = new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-1")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-1")));
+            var useCase = new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-2")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-3")));
 
             useCase.invoke(EventOrganizerId.create("EO-1"));
             useCase.invoke(EventOrganizerId.create("EO-1"));
@@ -114,7 +114,7 @@ public class CreateDancingEventUseCaseShould {
 
         assertThrows(FreeEventOrganizerHasReachedUnpublishedDancingEventLimit.class, () -> {
             var eventOrganizer = EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-1"));
-            var useCase = new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-1")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-1")));
+            var useCase = new CreateDancingEventUseCase(eventOrganizer, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-2")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-3")));
 
             useCase.invoke(EventOrganizerId.create("EO-1"));
             useCase.invoke(EventOrganizerId.create("EO-1"));
