@@ -33,10 +33,17 @@ public class CreateDancingEventUseCaseShould {
     }
 
     @Test
-    void add_multiple_dancing_events_to_an_event_organizer() throws Exception {
+    void allow_up_to_10_unpublished_dancing_events_for_premium_event_organizers() throws Exception {
         var eventOrganizer = EventOrganizer.create();
 
         var useCase = new CreateDancingEventUseCase(eventOrganizer);
+        useCase.invoke(EventOrganizerId.create("EO-1"));
+        useCase.invoke(EventOrganizerId.create("EO-1"));
+        useCase.invoke(EventOrganizerId.create("EO-1"));
+        useCase.invoke(EventOrganizerId.create("EO-1"));
+        useCase.invoke(EventOrganizerId.create("EO-1"));
+
+        useCase.invoke(EventOrganizerId.create("EO-1"));
         useCase.invoke(EventOrganizerId.create("EO-1"));
         useCase.invoke(EventOrganizerId.create("EO-1"));
         useCase.invoke(EventOrganizerId.create("EO-1"));
@@ -47,7 +54,13 @@ public class CreateDancingEventUseCaseShould {
                         new DancingEventId("DE-1"),
                         new DancingEventId("DE-2"),
                         new DancingEventId("DE-3"),
-                        new DancingEventId("DE-4")
+                        new DancingEventId("DE-4"),
+                        new DancingEventId("DE-5"),
+                        new DancingEventId("DE-6"),
+                        new DancingEventId("DE-7"),
+                        new DancingEventId("DE-8"),
+                        new DancingEventId("DE-9"),
+                        new DancingEventId("DE-10")
                 ),
                 eventOrganizer.unpublishedDancingEvents());
     }
