@@ -45,8 +45,14 @@ public class CreateDancingEventUseCaseShould {
     void add_multiple_dancing_events_to_an_event_organizer() throws Exception {
         var eventOrganizer = new EventOrganizer(new ArrayList<>());
 
-        new CreateDancingEventUseCase(eventOrganizer).invoke(EventOrganizerId.create("EO-1"));
+        var useCase = new CreateDancingEventUseCase(eventOrganizer);
+        useCase.invoke(EventOrganizerId.create("EO-1"));
+        useCase.invoke(EventOrganizerId.create("EO-1"));
 
-        assertEquals(List.of(new DancingEventId("DE-1")), eventOrganizer.unpublishedDancingEvents());
+        assertEquals(
+                List.of(
+                        new DancingEventId("DE-1"),
+                        new DancingEventId("DE-2")),
+                eventOrganizer.unpublishedDancingEvents());
     }
 }

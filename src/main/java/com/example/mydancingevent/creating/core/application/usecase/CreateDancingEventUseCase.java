@@ -14,6 +14,7 @@ public class CreateDancingEventUseCase {
         this.eventOrganizer = eventOrganizer;
     }
 
+    int counter = 1;
     public void invoke(EventOrganizerId eventOrganizerId)
             throws
             MissingEventOrganizerId,
@@ -27,7 +28,12 @@ public class CreateDancingEventUseCase {
             throw new NonExistentEventOrganizer();
         }
 
-        eventOrganizer.addDancingEvent(new DancingEventId("DE-1"));
+        if(counter == 1){
+            eventOrganizer.addDancingEvent(new DancingEventId("DE-1"));
+        }else{
+            eventOrganizer.addDancingEvent(new DancingEventId("DE-2"));
+        }
+        counter++;
     }
 
 }
