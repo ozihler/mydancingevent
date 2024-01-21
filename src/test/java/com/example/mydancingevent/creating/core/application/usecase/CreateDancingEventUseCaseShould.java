@@ -69,6 +69,22 @@ public class CreateDancingEventUseCaseShould {
     }
 
     @Test
+    void allow_up_to_2_unpublished_dancing_events_for_free_event_organizers() throws Exception {
+        var eventOrganizer = EventOrganizer.create(EventOrganizerType.FREE);
+
+        var useCase = new CreateDancingEventUseCase(eventOrganizer);
+        useCase.invoke(EventOrganizerId.create("EO-1"));
+        useCase.invoke(EventOrganizerId.create("EO-1"));
+
+        assertEquals(
+                List.of(
+                        new DancingEventId("DE-1"),
+                        new DancingEventId("DE-2")
+                ),
+                eventOrganizer.unpublishedDancingEvents());
+    }
+
+    @Test
     void fail_if_event_organizer_has_already_ten_unpublished_dancing_events_and_is_premium() throws Exception {
 
         assertThrows(PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit.class, () -> {

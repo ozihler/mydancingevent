@@ -26,15 +26,29 @@ public class EventOrganizer {
             PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit,
             FreeEventOrganizerHasReachedUnpublishedDancingEventLimit {
 
-        if (EventOrganizerType.PREMIUM == type) {
-            if (unpublishedDancingEvents.size() >= 10) {
-                throw new PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit();
-            }
+        if (isPremium() && hasReachedLimitForPremium()) {
+            throw new PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit();
         }
-        if(EventOrganizerType.FREE == type){
+        if (isFree() && hasReachedLimitForFree()) {
             throw new FreeEventOrganizerHasReachedUnpublishedDancingEventLimit();
         }
         this.unpublishedDancingEvents.add(dancingEventId);
+    }
+
+    private boolean hasReachedLimitForFree() {
+        return unpublishedDancingEvents.size() >= 2;
+    }
+
+    private boolean hasReachedLimitForPremium() {
+        return unpublishedDancingEvents.size() >= 10;
+    }
+
+    private boolean isFree() {
+        return EventOrganizerType.FREE == type;
+    }
+
+    private boolean isPremium() {
+        return EventOrganizerType.PREMIUM == type;
     }
 
     public List<DancingEventId> unpublishedDancingEvents() {
