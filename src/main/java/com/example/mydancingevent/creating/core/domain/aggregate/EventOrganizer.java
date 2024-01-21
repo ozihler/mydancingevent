@@ -2,9 +2,7 @@ package com.example.mydancingevent.creating.core.domain.aggregate;
 
 import com.example.mydancingevent.creating.core.domain.exception.FreeEventOrganizerHasReachedUnpublishedDancingEventLimit;
 import com.example.mydancingevent.creating.core.domain.exception.PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit;
-import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
-import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
-import com.example.mydancingevent.creating.core.domain.value.EventOrganizerType;
+import com.example.mydancingevent.creating.core.domain.value.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +33,11 @@ public class EventOrganizer {
         if (isFree() && hasReachedLimitForFree()) {
             throw new FreeEventOrganizerHasReachedUnpublishedDancingEventLimit();
         }
+
         this.unpublishedDancingEvents.add(dancingEventId);
+
     }
+
 
     private boolean hasReachedLimitForFree() {
         return unpublishedDancingEvents.size() >= 2;

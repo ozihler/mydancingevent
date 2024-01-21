@@ -2,13 +2,15 @@ package com.example.mydancingevent.creating.core.application.usecase;
 
 import com.example.mydancingevent.creating.core.application.exception.MissingEventOrganizerId;
 import com.example.mydancingevent.creating.core.application.exception.NonExistentEventOrganizer;
+import com.example.mydancingevent.creating.core.application.port.CreateDancingEvent;
 import com.example.mydancingevent.creating.core.application.port.EventOrganizerRepository;
 import com.example.mydancingevent.creating.core.application.port.ProvideDancingEventId;
 import com.example.mydancingevent.creating.core.domain.exception.FreeEventOrganizerHasReachedUnpublishedDancingEventLimit;
 import com.example.mydancingevent.creating.core.domain.exception.PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit;
+import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
 import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
 
-public class CreateDancingEventUseCase {
+public class CreateDancingEventUseCase implements CreateDancingEvent {
 
     private final EventOrganizerRepository eventOrganizers;
     private final ProvideDancingEventId provideDancingEventId;
@@ -20,7 +22,8 @@ public class CreateDancingEventUseCase {
         this.provideDancingEventId = provideDancingEventId;
     }
 
-    public void invoke(EventOrganizerId eventOrganizerId)
+    @Override
+    public DancingEventId invoke(EventOrganizerId eventOrganizerId)
             throws
             MissingEventOrganizerId,
             NonExistentEventOrganizer,
@@ -38,6 +41,8 @@ public class CreateDancingEventUseCase {
         eventOrganizer.addDancingEvent(dancingEventId);
 
         eventOrganizers.store(eventOrganizer);
+
+        return dancingEventId;
     }
 
 }

@@ -8,10 +8,7 @@ import com.example.mydancingevent.creating.core.domain.aggregate.EventOrganizer;
 import com.example.mydancingevent.creating.core.domain.exception.FreeEventOrganizerHasReachedUnpublishedDancingEventLimit;
 import com.example.mydancingevent.creating.core.domain.exception.InvalidEventOrganizerId;
 import com.example.mydancingevent.creating.core.domain.exception.PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit;
-import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
-import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
-import com.example.mydancingevent.creating.core.domain.value.EventOrganizerType;
-
+import com.example.mydancingevent.creating.core.domain.value.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -168,4 +165,29 @@ public class CreateDancingEventUseCaseShould {
                 List.of(new DancingEventId("DE-3")),
                 freeEventOrganizer2.unpublishedDancingEvents());
     }
+
+    @Test
+    void return_created_dancing_event_id() throws Exception{
+        var eventOrganizer = EventOrganizer.create(
+                EventOrganizerType.FREE,
+                EventOrganizerId.create("EO-1")
+        );
+        var useCase = new CreateDancingEventUseCase(
+                new InMemoryEventOrganizerRepository(
+                        new HashMap<>(
+                                Map.of(eventOrganizer.id(), eventOrganizer))
+                ),
+                new InMemoryCounterDancingEventIdProvider()
+        );
+
+        var dancingEventId = useCase.invoke(
+                eventOrganizer.id()
+        );
+
+        assertEquals(
+                new DancingEventId("DE-1"),
+                dancingEventId
+        );
+    }
+
 }
