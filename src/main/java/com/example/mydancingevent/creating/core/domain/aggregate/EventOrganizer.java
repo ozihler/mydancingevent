@@ -5,18 +5,17 @@ import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
 import java.util.List;
 
 public class EventOrganizer {
+    private final List<DancingEventId> unpublishedDancingEvents;
 
-    private DancingEventId dancingEventId;
-
-    public DancingEventId dancingEventId() {
-        return dancingEventId;
+    public EventOrganizer(List<DancingEventId> unpublishedDancingEvents) {
+        this.unpublishedDancingEvents = unpublishedDancingEvents;
     }
 
     public void addDancingEvent(DancingEventId dancingEventId) {
-        this.dancingEventId = dancingEventId;
+        this.unpublishedDancingEvents.add(dancingEventId);
     }
 
     public List<DancingEventId> unpublishedDancingEvents() {
-        return List.of(new DancingEventId("DE-1"));
+        return unpublishedDancingEvents;
     }
 }
