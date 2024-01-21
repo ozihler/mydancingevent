@@ -32,7 +32,7 @@ public class CreateDancingEventUseCaseShould {
     @Test
     void fail_if_the_event_organizer_does_not_exist() {
         assertThrows(NonExistentEventOrganizer.class, () -> {
-            new CreateDancingEventUseCase(null, EventOrganizer.create(EventOrganizerType.PREMIUM, EventOrganizerId.create("EO-1")), EventOrganizer.create(EventOrganizerType.FREE, EventOrganizerId.create("EO-1"))).invoke(EventOrganizerId.create("EO-1"));
+            new CreateDancingEventUseCase(null, null, null).invoke(EventOrganizerId.create("EO-1"));
         });
     }
 
