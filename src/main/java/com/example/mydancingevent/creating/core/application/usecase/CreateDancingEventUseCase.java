@@ -43,9 +43,9 @@ public class CreateDancingEventUseCase {
             throw new NonExistentEventOrganizer();
         }
 
-        if ("EO-1".equals(eventOrganizerId.value())) {
+        if (eventOrganizer.id().equals(eventOrganizerId)) {
             eventOrganizer.addDancingEvent(dancingEventId);
-        } else if ("EO-2".equals(eventOrganizerId.value())) {
+        } else if (eventOrganizer2.id().equals(eventOrganizerId)) {
             eventOrganizer2.addDancingEvent(dancingEventId);
         } else {
             eventOrganizer3.addDancingEvent(dancingEventId);
