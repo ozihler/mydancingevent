@@ -149,6 +149,6 @@ public class CreateDancingEventUseCaseShould {
 
         assertEquals(
                 List.of(new DancingEventId("DE-3")),
-                freeEventOrganizer.unpublishedDancingEvents());
+                freeEventOrganizer2.unpublishedDancingEvents());
     }
 }

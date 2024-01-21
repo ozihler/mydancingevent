@@ -12,12 +12,15 @@ public class CreateDancingEventUseCase {
 
     private final EventOrganizer eventOrganizer;
     private final EventOrganizer eventOrganizer2;
+    private final EventOrganizer eventOrganizer3;
 
     public CreateDancingEventUseCase(
             EventOrganizer eventOrganizer,
-            EventOrganizer eventOrganizer2, EventOrganizer eventOrganizer3) {
+            EventOrganizer eventOrganizer2,
+            EventOrganizer eventOrganizer3) {
         this.eventOrganizer = eventOrganizer;
         this.eventOrganizer2 = eventOrganizer2;
+        this.eventOrganizer3 = eventOrganizer3;
     }
 
     public void invoke(EventOrganizerId eventOrganizerId)
@@ -34,14 +37,18 @@ public class CreateDancingEventUseCase {
         var dancingEventId = getDancingEventId();
 
         if (eventOrganizer == null
-                || eventOrganizer2 == null) {
+                || eventOrganizer2 == null
+                || eventOrganizer3 == null
+        ) {
             throw new NonExistentEventOrganizer();
         }
 
         if ("EO-1".equals(eventOrganizerId.value())) {
             eventOrganizer.addDancingEvent(dancingEventId);
-        } else {
+        } else if ("EO-2".equals(eventOrganizerId.value())) {
             eventOrganizer2.addDancingEvent(dancingEventId);
+        } else {
+            eventOrganizer3.addDancingEvent(dancingEventId);
         }
     }
 
