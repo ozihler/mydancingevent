@@ -30,8 +30,10 @@ public class CreateDancingEventUseCase {
 
         if(counter == 1){
             eventOrganizer.addDancingEvent(new DancingEventId("DE-1"));
-        }else{
+        } else if (counter == 2) {
             eventOrganizer.addDancingEvent(new DancingEventId("DE-2"));
+        } else {
+            eventOrganizer.addDancingEvent(new DancingEventId("DE-3"));
         }
         counter++;
     }
