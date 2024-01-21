@@ -1,5 +1,6 @@
 package com.example.mydancingevent.creating.core.domain.aggregate;
 
+import com.example.mydancingevent.creating.core.domain.exception.PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit;
 import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
 
 import java.util.ArrayList;
@@ -16,7 +17,11 @@ public class EventOrganizer {
         return new EventOrganizer(new ArrayList<>());
     }
 
-    public void addDancingEvent(DancingEventId dancingEventId) {
+    public void addDancingEvent(DancingEventId dancingEventId)
+            throws PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit {
+        if (unpublishedDancingEvents.size() >= 10) {
+            throw new PremiumEventOrganizerHasReachedUnpublishedDancingEventLimit();
+        }
         this.unpublishedDancingEvents.add(dancingEventId);
     }
 
