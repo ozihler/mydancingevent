@@ -49,12 +49,15 @@ public class CreateDancingEventUseCaseShould {
         useCase.invoke(EventOrganizerId.create("EO-1"));
         useCase.invoke(EventOrganizerId.create("EO-1"));
         useCase.invoke(EventOrganizerId.create("EO-1"));
+        useCase.invoke(EventOrganizerId.create("EO-1"));
 
         assertEquals(
                 List.of(
                         new DancingEventId("DE-1"),
                         new DancingEventId("DE-2"),
-                        new DancingEventId("DE-3")),
+                        new DancingEventId("DE-3"),
+                        new DancingEventId("DE-4")
+                ),
                 eventOrganizer.unpublishedDancingEvents());
     }
 }
