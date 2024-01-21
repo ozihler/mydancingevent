@@ -11,11 +11,13 @@ public class EventOrganizer {
     private final EventOrganizerType type;
     private final List<DancingEventId> unpublishedDancingEvents;
     private final EventOrganizerId id;
+    private final List<DomainEvent> unpublishedDomainEvents;
 
     private EventOrganizer(EventOrganizerType type, List<DancingEventId> unpublishedDancingEvents, EventOrganizerId id) {
         this.type = type;
-        this.unpublishedDancingEvents = unpublishedDancingEvents;
         this.id = id;
+        this.unpublishedDancingEvents = unpublishedDancingEvents;
+        this.unpublishedDomainEvents = new ArrayList<>();
     }
 
     public static EventOrganizer create(EventOrganizerType type, EventOrganizerId id) {
@@ -34,8 +36,16 @@ public class EventOrganizer {
             throw new FreeEventOrganizerHasReachedUnpublishedDancingEventLimit();
         }
 
-        this.unpublishedDancingEvents.add(dancingEventId);
+        addNewDancingEventWithId(dancingEventId);
+    }
 
+    private void addNewDancingEventWithId(DancingEventId dancingEventId) {
+        this.unpublishedDancingEvents.add(dancingEventId);
+        this.unpublishedDomainEvents.add(new DomainEvent(
+                DomainEventType.DANCING_EVENT_CREATED,
+                this.id(),
+                dancingEventId
+        ));
     }
 
 
@@ -61,5 +71,9 @@ public class EventOrganizer {
 
     public EventOrganizerId id() {
         return id;
+    }
+
+    public List<DomainEvent> unpublishedDomainEvents() {
+        return unpublishedDomainEvents;
     }
 }

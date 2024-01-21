@@ -7,9 +7,15 @@ import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
 
 import java.util.Map;
 
-public record InMemoryEventOrganizerRepository(
-        Map<EventOrganizerId, EventOrganizer> eventOrganizers)
+public final class InMemoryEventOrganizerRepository
         implements EventOrganizerRepository {
+
+    private final Map<EventOrganizerId, EventOrganizer> eventOrganizers;
+    private final InMemoryMessagePublisher messages = new InMemoryMessagePublisher();
+
+    public InMemoryEventOrganizerRepository(Map<EventOrganizerId, EventOrganizer> eventOrganizers) {
+        this.eventOrganizers = eventOrganizers;
+    }
 
     @Override
     public EventOrganizer fetchById(EventOrganizerId eventOrganizerId)
@@ -29,5 +35,7 @@ public record InMemoryEventOrganizerRepository(
     @Override
     public void store(EventOrganizer eventOrganizer) {
         this.eventOrganizers.put(eventOrganizer.id(), eventOrganizer);
+        this.messages.publish(eventOrganizer.unpublishedDomainEvents());
     }
+
 }

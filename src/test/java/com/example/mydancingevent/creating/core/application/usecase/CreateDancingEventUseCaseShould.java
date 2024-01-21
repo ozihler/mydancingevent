@@ -190,4 +190,33 @@ public class CreateDancingEventUseCaseShould {
         );
     }
 
+    @Test
+    void create_a_domain_event_on_success() throws Exception{
+        var eventOrganizer = EventOrganizer.create(
+                EventOrganizerType.FREE,
+                EventOrganizerId.create("EO-1")
+        );
+        var useCase = new CreateDancingEventUseCase(
+                new InMemoryEventOrganizerRepository(
+                        new HashMap<>(
+                                Map.of(eventOrganizer.id(), eventOrganizer))
+                ),
+                new InMemoryCounterDancingEventIdProvider()
+        );
+
+        var dancingEventId = useCase.invoke(
+                eventOrganizer.id()
+        );
+
+        assertEquals(
+                List.of(new DomainEvent(
+                        DomainEventType.DANCING_EVENT_CREATED,
+                        eventOrganizer.id(),
+                        dancingEventId
+                )),
+                eventOrganizer.unpublishedDomainEvents()
+        );
+
+    }
+
 }
