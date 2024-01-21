@@ -11,9 +11,13 @@ import com.example.mydancingevent.creating.core.domain.value.EventOrganizerId;
 public class CreateDancingEventUseCase {
 
     private final EventOrganizer eventOrganizer;
+    private final EventOrganizer eventOrganizer2;
 
-    public CreateDancingEventUseCase(EventOrganizer eventOrganizer) {
+    public CreateDancingEventUseCase(
+            EventOrganizer eventOrganizer,
+            EventOrganizer eventOrganizer2, EventOrganizer eventOrganizer3) {
         this.eventOrganizer = eventOrganizer;
+        this.eventOrganizer2 = eventOrganizer2;
     }
 
     public void invoke(EventOrganizerId eventOrganizerId)
@@ -27,12 +31,18 @@ public class CreateDancingEventUseCase {
             throw new MissingEventOrganizerId();
         }
 
-        if (eventOrganizer == null) {
+        var dancingEventId = getDancingEventId();
+
+        if (eventOrganizer == null
+                || eventOrganizer2 == null) {
             throw new NonExistentEventOrganizer();
         }
 
-        var dancingEventId = getDancingEventId();
-        eventOrganizer.addDancingEvent(dancingEventId);
+        if ("EO-1".equals(eventOrganizerId.value())) {
+            eventOrganizer.addDancingEvent(dancingEventId);
+        } else {
+            eventOrganizer2.addDancingEvent(dancingEventId);
+        }
     }
 
     int counter = 1;
