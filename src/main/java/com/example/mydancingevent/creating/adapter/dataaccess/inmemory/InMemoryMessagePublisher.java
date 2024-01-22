@@ -6,6 +6,5 @@ import java.util.List;
 
 public class InMemoryMessagePublisher {
     public void publish(List<DomainEvent> domainEvents) {
-        System.out.println("Publishing: "+domainEvents);
     }
 }
