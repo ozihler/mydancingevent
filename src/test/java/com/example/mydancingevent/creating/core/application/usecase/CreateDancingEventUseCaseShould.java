@@ -1,7 +1,7 @@
 package com.example.mydancingevent.creating.core.application.usecase;
 
-import com.example.mydancingevent.creating.adapter.inmemory.InMemoryCounterDancingEventIdProvider;
-import com.example.mydancingevent.creating.adapter.inmemory.InMemoryEventOrganizerRepository;
+import com.example.mydancingevent.creating.adapter.dataaccess.inmemory.InMemoryCounterDancingEventIdProvider;
+import com.example.mydancingevent.creating.adapter.dataaccess.inmemory.InMemoryEventOrganizerRepository;
 import com.example.mydancingevent.creating.core.application.exception.MissingEventOrganizerId;
 import com.example.mydancingevent.creating.core.application.exception.NonExistentEventOrganizer;
 import com.example.mydancingevent.creating.core.domain.aggregate.EventOrganizer;

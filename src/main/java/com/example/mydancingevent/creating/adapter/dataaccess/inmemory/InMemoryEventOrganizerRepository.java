@@ -1,4 +1,4 @@
-package com.example.mydancingevent.creating.adapter.inmemory;
+package com.example.mydancingevent.creating.adapter.dataaccess.inmemory;
 
 import com.example.mydancingevent.creating.core.application.exception.NonExistentEventOrganizer;
 import com.example.mydancingevent.creating.core.application.port.EventOrganizerRepository;

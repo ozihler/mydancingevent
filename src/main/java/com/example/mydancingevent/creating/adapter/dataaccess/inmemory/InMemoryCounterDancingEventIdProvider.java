@@ -1,4 +1,4 @@
-package com.example.mydancingevent.creating.adapter.inmemory;
+package com.example.mydancingevent.creating.adapter.dataaccess.inmemory;
 
 import com.example.mydancingevent.creating.core.application.port.ProvideDancingEventId;
 import com.example.mydancingevent.creating.core.domain.value.DancingEventId;
